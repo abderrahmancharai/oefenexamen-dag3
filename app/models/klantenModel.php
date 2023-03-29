@@ -28,7 +28,7 @@ class klantenModel
                 TypePersoonId = typepersoon.Id
     
                  inner join contact on
-                contact.PersoonId = persoon.Id";
+                contact.PersoonId = persoon.Id  order by persoon.Achternaam ASC";
     $this->db->query($sql);
     $result = $this->db->resultSet();
     return $result;
@@ -60,6 +60,7 @@ class klantenModel
   }
 
 
+
   public function getklantbyid($persoonId)
   {
     $sql = "select 
@@ -85,6 +86,8 @@ class klantenModel
     return $result;
   }
 
+ 
+ 
 
 
 
@@ -112,7 +115,7 @@ class klantenModel
      ,persoon.IsVolwassen =:IsVolwassen
      ,contact.Email= :Email
      ,contact.Mobiel=:Mobiel
-    WHERE persoon.Id = :persoonId;";
+    WHERE persoon.Id = :persoonId ;";
 $this->db->query($sql);
 $this->db->bind(':persoonId', $post["persoonId"], PDO::PARAM_INT);
 $this->db->bind(':Voornaam', $post["Voornaam"], PDO::PARAM_STR);
@@ -125,6 +128,28 @@ $this->db->bind(':Mobiel', $post["Mobiel"], PDO::PARAM_INT);
     return $result;
   }
 
+  public function search($post)
+  {
+    $sql = "select  typepersoon.id
+    ,persoon.Voornaam
+    ,persoon.Tussenvoegsel
+    ,persoon.Achternaam
+    ,contact.Mobiel
+    ,contact.Email
+    ,persoon.DatumAangemaakt
+    
+    from typepersoon
+    
+inner join  persoon on
+TypePersoonId = typepersoon.Id
+
+inner join contact on
+contact.PersoonId = persoon.Id  where persoon.DatumAangemaakt  like :datum order by persoon.Achternaam ASC ;";
+$this->db->query($sql);
+$this->db->bind(':datum', $post["datum"], PDO::PARAM_INT);
+$result = $this->db->resultSet();
+return $result;
+  }
   
 
   

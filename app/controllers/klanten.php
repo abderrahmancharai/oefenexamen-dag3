@@ -19,6 +19,7 @@ class klanten extends Controller
 
     public function klantenoverzicht()
     {
+        
         $klanten = $this->klantenModel->getklant();
         $rows = '';
 
@@ -75,7 +76,7 @@ class klanten extends Controller
 
 
 
-        $this->view('klanten/klantenoverzichtupdate', $data); // Bestellingen ophalen via model
+        $this->view('klanten/klantenoverzichtupdate', $data); 
     }
 
 
@@ -90,7 +91,7 @@ class klanten extends Controller
             header("Refresh: 1; URL=" . URLROOT . "/klanten/klantenoverzichtupdate");
         } else {
             $klant = $this->klantenModel->getklantbyid($persoonId);
-            var_dump($klant);
+           
             $data = [
                 'title' => '<h1>Update contactgegevens</h1>',
                 'klant' => $klant[0]
@@ -101,47 +102,11 @@ class klanten extends Controller
 
 
 
-        // var_dump($row);}
-        // exit();
+        
 
 
 
     }
 }
 
-    // public function klantenupdateform($persoonId)
-    // {
-
-
-    //     $klant = $this->klantenModel->getklantbyid($persoonId);
-
-    //     $data = [
-    //         'title' => 'klanten in dienst',
-    //         'klant' => $klant[0]
-    //     ];
-
-    //     $this->view('klanten/klantenupdateform', $data); // Bestellingen ophalen via model
-    // }
-
-//     //public function update($persoonId = null)
-//     {
-//         if ($_SERVER["REQUEST_METHOD"] == "POST") 
-//         {
-//             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-//             $this->klantenModel->update($_POST,$persoonId);
-//             echo "update succesvol";
-         
-//         } else {
-//             echo "update niet gelukt";
-//         }
-
-//       var_dump($_POST);
-
-//         $data = [
-//             'title' => 'klanten in dienst',
-           
-//         ];
-
-//         $this->view('klanten/update', $data); // Bestellingen ophalen via model
-//     }
-// }
+?>

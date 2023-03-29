@@ -11,6 +11,10 @@
 
     <h1>klanten overzicht</h1>
     <a href="<?=URLROOT;?>/klanten/index">terug</a> |
+    <form action="" method="get">
+    <input type="text">
+    <input type="submit" value="search">
+    </form>
 
     <p>Er zijn <?= $data["amountOfklanten"]; ?> klanten</p>
     <table>
