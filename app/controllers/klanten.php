@@ -86,18 +86,26 @@ class klanten extends Controller
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $this->klantenModel->update($_POST);
+            echo "update succesvol";
+            header("Refresh: 1; URL=" . URLROOT . "/klanten/klantenoverzichtupdate");
         } else {
             $klant = $this->klantenModel->getklantbyid($persoonId);
             var_dump($klant);
-
-            // var_dump($row);
-            // exit();
-
-            $data = ['title' => '<h1>Update contactgegevens</h1>',
-                      'klant' => $klant[0]
-                    ];
+            $data = [
+                'title' => '<h1>Update contactgegevens</h1>',
+                'klant' => $klant[0]
+            ];
             $this->view("klanten/update", $data);
         }
+
+
+
+
+        // var_dump($row);}
+        // exit();
+
+
+
     }
 }
 

@@ -43,7 +43,7 @@
       <tr>
         <td>
             <label for="Email">Email</label>
-         <input type="email" name="Email" id="Email" value="<?= $data["klant"]->Email; ?>">
+         <input type="email" name="Email" id="Email"value="<?= $data["klant"]->Email;  ?>"   >
         </td>
       </tr>
       <tr>
