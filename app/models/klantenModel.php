@@ -60,7 +60,7 @@ class klantenModel
   }
 
 
-  public function updateklantform($persoonId)
+  public function getklantbyid($persoonId)
   {
     $sql = "select 
 	typepersoon.Id as  typepersoonId
@@ -94,8 +94,10 @@ class klantenModel
 
 
 
-  public function update()
+  public function update($post)
   {
+
+   
     $sql = "UPDATE typepersoon 
 
               
@@ -104,14 +106,21 @@ class klantenModel
     
     inner join contact on
     contact.PersoonId = persoon.Id
-    SET persoon.Voornaam = 'kip' 
-     ,persoon.Tussenvoegsel = 'de' 	
-     ,persoon.achternaam = 'jan' 
-     ,persoon.IsVolwassen ='1'
-     ,contact.Email= 'kip@hotmail.com' 
-     ,contact.Mobiel=0687484869
-    WHERE persoon.Id = 2;";
-    $this->db->query($sql);
+    SET persoon.Voornaam = :Voornaam 
+     ,persoon.Tussenvoegsel = :Tussenvoegsel	
+     ,persoon.achternaam = :Achternaam
+     ,persoon.IsVolwassen =:IsVolwassen
+     ,contact.Email= :Email
+     ,contact.Mobiel=:Mobiel
+    WHERE persoon.Id = :persoonId;";
+$this->db->query($sql);
+$this->db->bind(':persoonId', $post["persoonId"], PDO::PARAM_INT);
+$this->db->bind(':Voornaam', $post["Voornaam"], PDO::PARAM_STR);
+$this->db->bind(':Tussenvoegsel', $post["Tussenvoegsel"], PDO::PARAM_STR);
+$this->db->bind(':Achternaam', $post["Achternaam"], PDO::PARAM_STR);
+$this->db->bind(':IsVolwassen', $post["IsVolwassen"], PDO::PARAM_INT);
+$this->db->bind(':Email', $post["Email"], PDO::PARAM_STR);
+$this->db->bind(':Mobiel', $post["Mobiel"], PDO::PARAM_INT);    
     $result = $this->db->resultSet();
     return $result;
   }

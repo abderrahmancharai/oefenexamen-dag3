@@ -19,7 +19,6 @@ class klanten extends Controller
 
     public function klantenoverzicht()
     {
-
         $klanten = $this->klantenModel->getklant();
         $rows = '';
 
@@ -45,18 +44,16 @@ class klanten extends Controller
 
 
 
-        $this->view('klanten/klantenoverzicht',$data); // Bestellingen ophalen via model
+        $this->view('klanten/klantenoverzicht', $data); // Bestellingen ophalen via model
     }
 
     public function klantenoverzichtupdate()
     {
-
-      
         $klanten = $this->klantenModel->getklant();
         $rows = '';
 
         foreach ($klanten as $value) {
-            $persoonId  =$value->persoonId;
+            $persoonId  = $value->persoonId;
             $rows .= "<tr>
                         <td>$value->Voornaam</td>
                         <td>$value->Tussenvoegsel</td>
@@ -64,7 +61,7 @@ class klanten extends Controller
                         <td>$value->mobiel</td>
                         <td>$value->Email</td>
                         <td>$value->IsVolwassen</td>
-                        <td><a href='" . URLROOT . "/klanten/klantenupdateform/$persoonId'>update</i></a></td>
+                        <td><a href='" . URLROOT . "/klanten/update/$persoonId'>update</i></a></td>
                        
                       </tr>";
         }
@@ -78,29 +75,65 @@ class klanten extends Controller
 
 
 
-        $this->view('klanten/klantenoverzichtupdate',$data); // Bestellingen ophalen via model
+        $this->view('klanten/klantenoverzichtupdate', $data); // Bestellingen ophalen via model
     }
 
 
-    public function klantenupdateform($persoonId = 0)
+
+
+    public function update($persoonId = null)
     {
-        var_dump($persoonId);
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $this->klantenModel->update($_POST);
+        } else {
+            $klant = $this->klantenModel->getklantbyid($persoonId);
+            var_dump($klant);
 
-        $klanten = $this->klantenModel->updateklantform($persoonId);
+            // var_dump($row);
+            // exit();
 
-        var_dump($klanten);
-
-        
-        $data = [
-            'title' => 'klanten in dienst',
-            'klanten' => $klanten,
-           
-        ];
-       
-
-
-
-
-        $this->view('klanten/klantenupdateform',$data ); // Bestellingen ophalen via model
+            $data = ['title' => '<h1>Update contactgegevens</h1>',
+                      'klant' => $klant[0]
+                    ];
+            $this->view("klanten/update", $data);
+        }
     }
 }
+
+    // public function klantenupdateform($persoonId)
+    // {
+
+
+    //     $klant = $this->klantenModel->getklantbyid($persoonId);
+
+    //     $data = [
+    //         'title' => 'klanten in dienst',
+    //         'klant' => $klant[0]
+    //     ];
+
+    //     $this->view('klanten/klantenupdateform', $data); // Bestellingen ophalen via model
+    // }
+
+//     //public function update($persoonId = null)
+//     {
+//         if ($_SERVER["REQUEST_METHOD"] == "POST") 
+//         {
+//             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+//             $this->klantenModel->update($_POST,$persoonId);
+//             echo "update succesvol";
+         
+//         } else {
+//             echo "update niet gelukt";
+//         }
+
+//       var_dump($_POST);
+
+//         $data = [
+//             'title' => 'klanten in dienst',
+           
+//         ];
+
+//         $this->view('klanten/update', $data); // Bestellingen ophalen via model
+//     }
+// }
